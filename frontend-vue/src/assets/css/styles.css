@@ -1,0 +1,8 @@
+/* Imports TailwindCSS */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  /* maybe make a class for the active router to use the shorthand for media queries idk*/
+  }

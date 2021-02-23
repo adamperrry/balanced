@@ -1,9 +1,16 @@
 <template>
-  <div>
-    <h1>Test Home Page</h1>
-    <div>
-      <Liquidity />
-      <QuickSummary />
+  <div class="flex justify-center pt-7 ">
+    <div class="flex flex-col flex-grow  max-w-7xl ">
+      <div class="flex">
+        <div class="flex flex-col flex-grow justify-around">
+          <Liquidity />
+          <!-- other component placeholder -->
+        </div>
+        <div class="flex flex-col flex-grow max-w-max">
+          <QuickSummary />
+        </div>
+      </div>
+      <!-- placeholder for transactions table -->
     </div>
   </div>
 </template>

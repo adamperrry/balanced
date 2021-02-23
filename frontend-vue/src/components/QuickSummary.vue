@@ -1,13 +1,49 @@
 <template>
-  <div>
-    <div v-for="category in categoryExpenses" :key="category.id">
-      <div>{{ category.name }}</div>
-      <div>This Month: {{ toCurrency(category.thisMonth) }}</div>
-      <div>Last Month: {{ toCurrency(category.lastMonth) }}</div>
-      <br /><br />
+  <div
+    class=" bg-fuchsia-200 shadow-md max-w-4xl px-6 py-3 rounded-2xl flex flex-col items-center"
+  >
+    <div>
+      <span class="text-fuchsia-900">Expenses At A Glance - </span>
+      <span class="font-semibold text-xl text-warmGray-700">{{
+        currentMonth
+      }}</span>
     </div>
 
-    <span>View all summaries...</span>
+    <div class="flex flex-wrap justify-around">
+      <div
+        class="shadow-sm bg-fuchsia-300 rounded-xl mt-2 mx-1 px-4 pb-2 pt-1 flex-auto flex flex-col"
+        v-for="category in categoryExpenses"
+        :key="category.id"
+      >
+        <span
+          class=" mb-1 text-white text-lg font-medium text-center tracking-wide flex-grow border-b-2 border-fuchsia-200"
+          >{{ category.name }}</span
+        >
+
+        <div class="flex items-end justify-between">
+          <span class="text-base text-warmGray-800">This Month:</span>
+          <span
+            class=" font-medium"
+            :class="[
+              category.thisMonth >= category.lastMonth
+                ? 'text-lime-800'
+                : 'text-red-900',
+            ]"
+            >{{ toCurrency(category.thisMonth) }}</span
+          >
+        </div>
+
+        <div class="flex items-end justify-between text-sm text-warmGray-600">
+          <span>Last Month:</span>
+          <span>{{ toCurrency(category.lastMonth) }}</span>
+        </div>
+      </div>
+    </div>
+
+    <span
+      class="text-warmGray-700 mt-3 hover:text-warmGray-500 text-sm underline cursor-pointer "
+      >View all summaries...</span
+    >
   </div>
 </template>
 
@@ -20,6 +56,9 @@ export default {
   name: "QuickSummary",
   computed: {
     ...mapState(["transactions"]),
+    currentMonth() {
+      return moment().format("MMMM, YYYY");
+    },
     useMoment() {
       return moment();
     },
@@ -28,7 +67,7 @@ export default {
       let thisMonth = this.useMoment;
       let lastMonth = moment(thisMonth).subtract(1, "month");
 
-      this.transactions.forEach((expense) => {
+      this.transactions.forEach(expense => {
         if (expense.type.name !== "Expense") return;
         let category = expense.category.name;
         let date = moment(expense.date, "YYYY-MM-DD");
@@ -45,14 +84,14 @@ export default {
         };
 
         if (isThisMonth) {
-          expenses[category]["thisMonth"] += expense.amount;
+          expenses[category]["thisMonth"] -= expense.amount;
         } else if (isLastMonth) {
-          expenses[category]["lastMonth"] += expense.amount;
+          expenses[category]["lastMonth"] -= expense.amount;
         }
       });
 
       let expenseArray = Object.values(expenses);
-      expenseArray.sort((a, b) => (a.thisMonth < b.thisMonth ? 1 : -1));
+      expenseArray.sort((a, b) => (a.thisMonth > b.thisMonth ? 1 : -1));
       return expenseArray;
     },
   },
