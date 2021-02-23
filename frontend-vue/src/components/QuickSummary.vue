@@ -16,7 +16,7 @@
         :key="category.id"
       >
         <span
-          class=" mb-1 text-white text-lg font-medium text-center tracking-wide flex-grow border-b-2 border-fuchsia-200"
+          class=" mb-1 text-white text-lg font-medium text-center tracking-wide border-b-2 border-fuchsia-200"
           >{{ category.name }}</span
         >
 
@@ -26,7 +26,7 @@
             class=" font-medium"
             :class="[
               category.thisMonth >= category.lastMonth
-                ? 'text-lime-800'
+                ? 'text-emerald-900'
                 : 'text-red-900',
             ]"
             >{{ toCurrency(category.thisMonth) }}</span
@@ -54,6 +54,9 @@ import moment from "moment";
 
 export default {
   name: "QuickSummary",
+  data() {
+    return {};
+  },
   computed: {
     ...mapState(["transactions"]),
     currentMonth() {
@@ -64,7 +67,7 @@ export default {
     },
     categoryExpenses() {
       let expenses = {};
-      let thisMonth = this.useMoment;
+      let thisMonth = moment(this.useMoment);
       let lastMonth = moment(thisMonth).subtract(1, "month");
 
       this.transactions.forEach(expense => {
@@ -95,14 +98,6 @@ export default {
       return expenseArray;
     },
   },
-  methods: {
-    toCurrency(n) {
-      let formatter = new Intl.NumberFormat("en-us", {
-        style: "currency",
-        currency: "USD",
-      });
-      return formatter.format(n / 100);
-    },
-  },
+  methods: {},
 };
 </script>

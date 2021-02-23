@@ -1,10 +1,13 @@
 import axios from "axios";
 import moment from "moment";
 import { createStore } from "vuex";
+import { sumAmountsAfterDate } from "@/store/helpers"
 
 const baseUrl = "http://localhost:8080/api/";
 
 const getInitialState = () => {
+  // should only be the things we're getting from API, if not change the getData action. 
+  // Each key name corresponds to an API path, and this must be true for the data to mount correctly
   return {
     transactions: [],
     transactionSettings: [],
@@ -14,16 +17,6 @@ const getInitialState = () => {
     types: [],
     methods: [],
   };
-};
-
-const sumAmountsAfterDate = (transactions, initialDate) => {
-  return transactions.reduce(
-    (total, transaction) =>
-      moment(transaction.date).isSameOrAfter(initialDate)
-        ? total + transaction.amount
-        : total,
-    0.0
-  );
 };
 
 //to handle state

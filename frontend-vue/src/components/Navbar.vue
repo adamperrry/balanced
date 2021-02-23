@@ -6,7 +6,7 @@
       id="nav"
     >
       <div
-        class="relative top-2 right-1 text-7xl font-bold text-emerald-900 tracking-tighter"
+        class="select-none relative top-2 right-1 text-7xl font-bold text-emerald-900 tracking-tighter"
       >
         balanced.
       </div>

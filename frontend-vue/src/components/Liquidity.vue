@@ -43,14 +43,6 @@ export default {
       );
     },
   },
-  methods: {
-    toCurrency(n) {
-      let formatter = new Intl.NumberFormat("en-us", {
-        style: "currency",
-        currency: "USD",
-      });
-      return formatter.format(n / 100);
-    },
-  },
+  methods: {},
 };
 </script>
