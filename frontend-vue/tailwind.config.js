@@ -19,12 +19,12 @@ module.exports = {
       },
       width: {
         'col-1' : '7rem',
-        'col-2' : '8rem',
-        'col-3' : '9rem',
-        'col-4' : '9rem',
-        'col-5' : '8rem',
+        'col-2' : '7rem',
+        'col-3' : '8rem',
+        'col-4' : '8rem',
+        'col-5' : '6rem',
         'col-6' : '8rem',
-        'col-7' : '8rem',
+        'col-7' : '11rem',
         'col-8' : '12rem',
       },
       scale: {
@@ -38,7 +38,8 @@ module.exports = {
   },
   variants: {
     extend: {
-      // borderWidth: ["hover", "focus"],
+      zIndex: ["hover"],
+      position: ["hover"]
     },
   },
   plugins: [],
