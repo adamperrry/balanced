@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-col shadow-md max-w-xs bg-orange-100 px-6 pb-3 pt-2 rounded-2xl ">
-    <div
-      class="flex justify-between"
-    >
+  <div
+    class="flex flex-col shadow-md max-w-xs bg-orange-100 px-6 pb-3 pt-2 rounded-2xl "
+  >
+    <div class="flex justify-between">
       <div class="flex flex-col text-right justify-end pr-2">
         <span class="text-warmGray-700">{{ currentMonth }}:</span>
         <span class="text-warmGray-700">YTD: </span>
@@ -36,6 +36,7 @@
     </div>
 
     <span
+      @click="viewSummaries()"
       class="text-warmGray-700 mt-2 hover:text-warmGray-500 text-sm underline cursor-pointer text-center"
       >View all summaries...</span
     >
@@ -75,6 +76,10 @@ export default {
       return sumAmountsAfterDate(this.expenses, thisYear) * -1;
     },
   },
-  methods: {},
+  methods: {
+    viewSummaries() {
+      this.$router.push({ path: "/summaries" });
+    },
+  },
 };
 </script>

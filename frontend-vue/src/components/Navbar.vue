@@ -33,8 +33,8 @@ export default {
         { id: 1, name: "Home", path: "/" },
         { id: 2, name: "Transaction Log", path: "/transactions" },
         { id: 3, name: "Accounts", path: "/accounts" },
-        { id: 4, name: "Summaries", path: "/summaries" },
-        { id: 5, name: "Categories", path: "/categories" },
+        { id: 4, name: "Categories", path: "/categories" },
+        { id: 5, name: "Summaries", path: "/summaries" },
       ],
     };
   },

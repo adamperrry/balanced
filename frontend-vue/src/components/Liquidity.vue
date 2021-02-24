@@ -15,6 +15,7 @@
       >
     </div>
     <span
+      @click="viewAccounts()"
       class="text-warmGray-800 hover:text-warmGray-500 text-sm pt-2 underline cursor-pointer self-center "
       >View all acounts...</span
     >
@@ -43,6 +44,10 @@ export default {
       );
     },
   },
-  methods: {},
+  methods: {
+    viewAccounts(){
+      this.$router.push({path:'/accounts'});
+    }
+  },
 };
 </script>

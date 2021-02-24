@@ -41,6 +41,7 @@
     </div>
 
     <span
+      @click="viewSummaries()"
       class="text-warmGray-700 mt-3 hover:text-warmGray-500 text-sm underline cursor-pointer "
       >View all summaries...</span
     >
@@ -98,6 +99,10 @@ export default {
       return expenseArray;
     },
   },
-  methods: {},
+  methods: {
+    viewSummaries() {
+      this.$router.push({ path: "/summaries" });
+    },
+  },
 };
 </script>

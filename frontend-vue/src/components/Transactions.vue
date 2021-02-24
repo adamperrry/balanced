@@ -70,50 +70,8 @@
     <!-- end of header row -->
 
     <!-- start of table row -->
-    <div
-      v-for="transaction in shownTransactions"
-      :key="transaction.id"
-      class="cursor-pointer hover:relative hover:z-50 flex py-1 px-3 border-b-2 hover:shadow-md text-warmGray-800"
-      :class="[
-        {
-          'bg-red-50': isExpense(transaction),
-          'bg-blueGray-50': isTransfer(transaction),
-          'bg-emerald-50': isIncome(transaction),
-        },
-      ]"
-    >
-      <div class="px-1 w-col-1 flex-auto sm:flex-none">
-        {{ dateFormat(transaction.date) }}
-      </div>
-      <div
-        class="pl-1 pr-6 w-col-2 flex-auto sm:flex-none font-medium text-right"
-        :class="[
-          {
-            'text-red-900': isExpense(transaction),
-            'text-emerald-900': isIncome(transaction),
-          },
-        ]"
-      >
-        {{ displayAmount(transaction) }}
-      </div>
-      <div class="px-1 w-col-3 hidden sm:block truncate">
-        {{ transaction.category ? transaction.category.name : "-" }}
-      </div>
-      <div class="px-1 w-col-4 hidden lg:block truncate">
-        {{ transaction.subcategory ? transaction.subcategory.name : "-" }}
-      </div>
-      <div class="px-1 w-col-5 hidden xl:block truncate">
-        {{ transaction.toAccount ? transaction.toAccount.name : "-" }}
-      </div>
-      <div class="px-1 w-col-6 hidden xl:block truncate">
-        {{ transaction.fromAccount ? transaction.fromAccount.name : "-" }}
-      </div>
-      <div class="px-1 w-col-7 hidden lg:block truncate">
-        {{ transaction.method.name }}
-      </div>
-      <div class="px-1 w-col-8 flex-grow hidden sm:block">
-        {{ transaction.description }}
-      </div>
+    <div v-for="transaction in shownTransactions" :key="transaction.id">
+      <TransactionRow :transaction="transaction" />
     </div>
     <!-- end of table row -->
 
@@ -180,12 +138,14 @@ import { mapState } from "vuex";
 import moment from "moment";
 import FilterIcon from "@/assets/FilterIcon.vue";
 import SortIcon from "@/assets/SortIcon.vue";
+import TransactionRow from "@/components/TransactionRow.vue";
 
 export default {
   name: "Transactions",
   components: {
     FilterIcon,
     SortIcon,
+    TransactionRow,
   },
   props: {
     showAll: {
@@ -265,23 +225,6 @@ export default {
     },
     showInitial() {
       this.count = this.initialCount;
-    },
-    dateFormat(string) {
-      return moment(string, "YYYY-MM-DD").format("MM/DD/YYYY");
-    },
-    displayAmount(transaction) {
-      let amount = transaction.amount;
-      amount = transaction.type.name === "Expense" ? amount * -1 : amount;
-      return this.toCurrency(amount);
-    },
-    isExpense(transaction) {
-      return transaction.type.name === "Expense";
-    },
-    isIncome(transaction) {
-      return transaction.type.name === "Income";
-    },
-    isTransfer(transaction) {
-      return transaction.type.name === "Fund Transfer";
     },
   },
   updated() {
