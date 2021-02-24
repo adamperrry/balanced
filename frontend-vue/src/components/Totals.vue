@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col shadow-md max-w-xs bg-orange-100 px-6 py-3 rounded-2xl ">
+  <div class="flex flex-col shadow-md max-w-xs bg-orange-100 px-6 pb-3 pt-2 rounded-2xl ">
     <div
       class="flex justify-between"
     >

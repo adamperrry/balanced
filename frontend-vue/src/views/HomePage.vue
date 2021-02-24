@@ -1,17 +1,22 @@
 <template>
   <div class="flex justify-center pt-10 ">
-    <div class="flex flex-col flex-grow  max-w-7xl ">
-      <div class="flex">
-        <div class="flex flex-col flex-grow justify-between">
+    <div
+      class="flex flex-col flex-grow  max-w-7xl mx-3 divide-y-5 divide-dotted"
+    >
+      <div class="flex flex-col items-center sm:flex-row sm:items-start mb-10">
+        <div class="flex flex-col flex-grow sm:mr-10 w-full max-w-xs">
           <Liquidity />
+          <!-- Adding div to remove justify-between, so they don't get farther apart if QuickSummary gets taller -->
+          <div class="mt-10"></div>
           <Totals />
-          <!-- other component placeholder -->
+          <div class="mt-10 sm:mt-0"></div>
         </div>
         <div class="flex flex-col flex-grow max-w-max">
           <QuickSummary />
         </div>
       </div>
       <!-- placeholder for transactions table -->
+      <Transactions />
     </div>
   </div>
 </template>
@@ -21,7 +26,7 @@
 import Liquidity from "@/components/Liquidity.vue";
 import QuickSummary from "@/components/QuickSummary.vue";
 import Totals from "@/components/Totals.vue";
-import { mapState } from "vuex";
+import Transactions from "@/components/Transactions.vue";
 
 export default {
   name: "HomePage",
@@ -29,9 +34,7 @@ export default {
     Liquidity,
     QuickSummary,
     Totals,
-  },
-  computed: {
-    ...mapState(["transactions"]),
+    Transactions,
   },
 };
 </script>

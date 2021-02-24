@@ -4,7 +4,7 @@ import App from "./App.vue";
 import router from "./router";
 import axios from "axios";
 import VueAxios from "vue-axios";
-import { toCurrency } from "./store/helpers";
+import { toCurrency, scrollToTop, scrollToBottom } from "./store/helpers";
 
 import "./assets/css/styles.css";
 
@@ -15,6 +15,8 @@ createApp(App)
   .mixin({
     methods: {
       toCurrency,
+      scrollToTop,
+      scrollToBottom
     },
   })
   .mount("#app");
