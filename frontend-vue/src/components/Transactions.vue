@@ -1,5 +1,20 @@
 <template>
-  <div class="pt-10 mb-12">
+  <div class="mb-12">
+    <!-- start of button rows -->
+    <div class="my-4 flex flex-col sm:flex-row">
+      <AddButton
+        @buttonClicked="showTransactionForm()"
+        :msg="'Add Transaction'"
+      />
+    </div>
+    <!-- end of button rows -->
+
+    <!-- start of conditionally hidden add transaction form div -->
+    <div class="mb-4">
+      <AddNewTransaction :isShown="addFormShown" @close="hideTransactionForm()" />
+    </div>
+    <!-- end of conditionally hidden add transaction form div -->
+
     <!-- start of header row -->
     <div
       class="flex pt-2 pb-1 px-3 rounded-t-xl bg-emerald-200 font-semibold tracking-wide border-b-4 border-emerald-600 shadow-sm text-warmGray-700"
@@ -69,13 +84,14 @@
     </div>
     <!-- end of header row -->
 
-    <!-- start of table row -->
+    <!-- start of table rows -->
     <div v-for="transaction in shownTransactions" :key="transaction.id">
       <TransactionRow :transaction="transaction" />
     </div>
-    <!-- end of table row -->
+    <!-- end of table rows -->
 
-    <div class="flex justify-center">
+    <!-- start of show more/less buttons -->
+    <div class="flex justify-center mt-1">
       <!-- start of button -->
       <div
         @click="showLess()"
@@ -120,6 +136,8 @@
       </div>
       <!-- end of button -->
     </div>
+    <!-- end of show more/less buttons -->
+
     <!-- start of back to top -->
     <div
       @click="scrollToTop()"
@@ -138,14 +156,18 @@ import { mapState } from "vuex";
 import moment from "moment";
 import FilterIcon from "@/assets/FilterIcon.vue";
 import SortIcon from "@/assets/SortIcon.vue";
+import AddButton from "@/components/AddButton.vue";
 import TransactionRow from "@/components/TransactionRow.vue";
+import AddNewTransaction from "@/components/AddNewTransaction.vue";
 
 export default {
   name: "Transactions",
   components: {
     FilterIcon,
     SortIcon,
+    AddButton,
     TransactionRow,
+    AddNewTransaction,
   },
   props: {
     showAll: {
@@ -163,6 +185,7 @@ export default {
       iconClasses: ["w-3", "h-3", "text-emerald-700", "fill-current"],
       sortByDate: -1,
       sortByAmount: 0,
+      addFormShown: false,
     };
   },
   computed: {
@@ -225,6 +248,12 @@ export default {
     },
     showInitial() {
       this.count = this.initialCount;
+    },
+    showTransactionForm() {
+      this.addFormShown = true;
+    },
+    hideTransactionForm() {
+      this.addFormShown = false;
     },
   },
   updated() {

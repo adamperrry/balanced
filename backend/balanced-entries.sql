@@ -1,9 +1,9 @@
 USE balanced;
 
 -- add accounts
-insert into accounts (account_name, initial_balance, initial_balance_date, is_liquid, account_number, routing_number) values ('Checking', 300000, '2020-02-01',true,'61117725','215012624');
-insert into accounts (account_name, initial_balance, initial_balance_date, is_liquid, account_number, routing_number) values ('Savings', 1700000, '2020-02-01',true,'016059','215012624');
-insert into accounts (account_name, initial_balance, initial_balance_date, is_liquid, account_number) values ('Visa Card-4848', -103650, '2020-02-01',true,'5148771155394848');
+insert into accounts (account_name, initial_balance, initial_balance_date, is_liquid, account_number, routing_number) values ('Checking', 300000, '2020-02-01',true,'11111111','111111111');
+insert into accounts (account_name, initial_balance, initial_balance_date, is_liquid, account_number, routing_number) values ('Savings', 1700000, '2020-02-01',true,'111111','111111111');
+insert into accounts (account_name, initial_balance, initial_balance_date, is_liquid, account_number) values ('Visa Card-1111', -103650, '2020-02-01',true,'5555555555555555');
 insert into accounts (account_name, initial_balance, initial_balance_date, is_liquid) values ('401K', 3500000, '2020-02-01',false); 
 insert into accounts (account_name, initial_balance, initial_balance_date, is_liquid) values ('Venmo', 5826, '2020-02-01',true);
 insert into accounts (account_name, initial_balance, initial_balance_date, is_liquid) values ('Gift Cards', 14354, '2020-02-01',true);
@@ -11,8 +11,8 @@ insert into accounts (account_name, initial_balance, initial_balance_date, is_li
 
 -- add methods
 insert into methods (method_name, description) values ('Cash', 'Cash');
-insert into methods (method_name, description) values ('Visa Debit-5334', 'Visa debit card ending in 5334. Expires 3/25');
-insert into methods (method_name, description) values ('Visa Credit Card-4848', 'Visa credit card ending in 4848. Expires 4/30');
+insert into methods (method_name, description) values ('Visa Debit-1111', 'Visa debit card ending in 1111. Expires 3/25');
+insert into methods (method_name, description) values ('Visa Credit Card-5555', 'Visa credit card ending in 5555. Expires 4/30');
 insert into methods (method_name, description) values ('Check', 'Check');
 insert into methods (method_name, description) values ('PayPal', 'PayPal account. User info etc..');
 insert into methods (method_name, description) values ('Venmo', 'Venmo, username is aperry5');

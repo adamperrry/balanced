@@ -1,10 +1,10 @@
 <template>
   <div
-    class="cursor-pointer hover:relative hover:z-50 flex py-1 px-3 border-b-2 hover:shadow-md text-warmGray-800"
+    class="cursor-pointer hover:relative hover:z-50 flex py-1 px-3 border-b border-gray-500 hover:shadow-md text-warmGray-800"
     :class="[
       {
-        'bg-red-50': isExpense(transaction),
-        'bg-blueGray-50': isTransfer(transaction),
+        'bg-red-100': isExpense(transaction),
+        'bg-white': isTransfer(transaction),
         'bg-emerald-50': isIncome(transaction),
       },
     ]"
@@ -13,7 +13,7 @@
       {{ dateFormat(transaction.date) }}
     </div>
     <div
-      class="pl-1 pr-6 w-col-2 flex-auto sm:flex-none font-medium text-right"
+      class="px-1 w-col-2 flex-auto sm:flex-none font-medium "
       :class="[
         {
           'text-red-900': isExpense(transaction),

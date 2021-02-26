@@ -16,7 +16,7 @@ DROP TABLE IF EXISTS types;
 CREATE TABLE accounts (
 	account_id INT AUTO_INCREMENT PRIMARY KEY,
 	account_name VARCHAR(50) NOT NULL UNIQUE,
-    initial_balance DECIMAL(15,2) NOT NULL,
+    initial_balance INT NOT NULL,
     initial_balance_date DATE NOT NULL,
     is_liquid BOOLEAN NOT NULL,
     account_number VARCHAR(50),
@@ -75,14 +75,14 @@ CREATE TABLE transactions (
 	transaction_id INT AUTO_INCREMENT PRIMARY KEY,
     type_id INT NOT NULL,
     `date` DATE NOT NULL,
-    amount DECIMAL(15,2) NOT NULL,
+    amount INT NOT NULL,
     method_id INT NOT NULL,
     category_id INT,
     subcategory_id INT,
     from_account_id INT,
     to_account_id INT,
     description TEXT,
-    tip DECIMAL(15,2) NOT NULL DEFAULT 0.00,
+    tip INT NOT NULL DEFAULT 0,
     is_recurring BOOLEAN NOT NULL DEFAULT false,
     FOREIGN KEY (type_id) REFERENCES types (type_id),
     FOREIGN KEY (method_id) REFERENCES methods (method_id),
@@ -92,3 +92,4 @@ CREATE TABLE transactions (
     FOREIGN KEY (to_account_id) REFERENCES accounts (account_id)
 );
 
+select * from transactions;

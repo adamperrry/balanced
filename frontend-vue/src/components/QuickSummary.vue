@@ -11,7 +11,7 @@
 
     <div class="flex flex-wrap justify-around">
       <div
-        class="shadow-sm bg-fuchsia-300 rounded-xl mt-2 mx-1 px-4 pb-2 pt-1 flex-grow flex flex-col max-w-xxs transform hover:scale-97"
+        class="shadow-sm bg-fuchsia-300 rounded-xl mt-2 mx-1 px-4 pb-2 pt-1 flex-grow flex flex-col max-w-1xs transform hover:scale-97"
         v-for="category in categoryExpenses"
         :key="category.id"
       >

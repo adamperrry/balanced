@@ -45,9 +45,9 @@ export default {
     },
   },
   methods: {
-    viewAccounts(){
-      this.$router.push({path:'/accounts'});
-    }
+    viewAccounts() {
+      this.$router.push({ path: "/accounts" });
+    },
   },
 };
 </script>

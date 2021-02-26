@@ -1,12 +1,12 @@
 import axios from "axios";
 import moment from "moment";
 import { createStore } from "vuex";
-import { sumAmountsAfterDate } from "@/store/helpers"
+import { sumAmountsAfterDate } from "@/store/helpers";
 
 const baseUrl = "http://localhost:8080/api/";
 
 const getInitialState = () => {
-  // should only be the things we're getting from API, if not change the getData action. 
+  // should only be the things we're getting from API, if not change the getData action.
   // Each key name corresponds to an API path, and this must be true for the data to mount correctly
   return {
     transactions: [],
@@ -31,12 +31,12 @@ const getters = {
 
       let income = sumAmountsAfterDate(
         getters.transactionsToAccountId(account.id),
-        initialDate
+        initialDate,
       );
 
       let expenses = sumAmountsAfterDate(
         getters.transactionsFromAccountId(account.id),
-        initialDate
+        initialDate,
       );
 
       let balance = account.initialBalance + income - expenses;
@@ -51,25 +51,25 @@ const getters = {
 
     return accountBalances;
   },
-  transactionsToAccountId: (state) => (id) => {
+  transactionsToAccountId: state => id => {
     return state.transactions.filter(
-      (transaction) => transaction.toAccount && transaction.toAccount.id === id
+      transaction => transaction.toAccount && transaction.toAccount.id === id,
     );
   },
-  transactionsFromAccountId: (state) => (id) => {
+  transactionsFromAccountId: state => id => {
     return state.transactions.filter(
-      (transaction) =>
-        transaction.fromAccount && transaction.fromAccount.id === id
+      transaction =>
+        transaction.fromAccount && transaction.fromAccount.id === id,
     );
   },
   expenses(state) {
     return state.transactions.filter(
-      (transaction) => transaction.type.name === "Expense"
+      transaction => transaction.type.name === "Expense",
     );
   },
   income(state) {
     return state.transactions.filter(
-      (transaction) => transaction.type.name === "Income"
+      transaction => transaction.type.name === "Income",
     );
   },
 };
@@ -79,12 +79,23 @@ const actions = {
   getData({ commit }) {
     let stateObject = getInitialState();
     let keys = Object.keys(stateObject);
-    keys.forEach((key) => {
-      axios.get(baseUrl + key).then((response) => {
+    keys.forEach(key => {
+      axios.get(baseUrl + key).then(response => {
         stateObject[key] = response.data;
         commit("SET_DATA", stateObject);
       });
     });
+  },
+  addTransaction({ commit }, transaction) {
+    axios.post(baseUrl + "transactions/", transaction).then(
+      response => {
+        console.log("Successfully added to DB: ", response.data);
+        commit("ADD_TRANSACTION", response.data);
+      },
+      error => {
+        console.log("Couldn't save to DB: ", error);
+      },
+    );
   },
 };
 
@@ -92,6 +103,9 @@ const actions = {
 const mutations = {
   SET_DATA(state, data) {
     Object.assign(state, data);
+  },
+  ADD_TRANSACTION(state, transaction) {
+    state.transactions.push(transaction);
   },
 };
 
