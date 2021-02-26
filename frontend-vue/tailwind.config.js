@@ -35,6 +35,7 @@ module.exports = {
         "98": ".98",
         "99": ".99",
       },
+      screens: { uncollapsed: "952px" },
     },
     colors: colors,
   },

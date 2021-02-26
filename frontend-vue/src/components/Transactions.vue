@@ -11,7 +11,10 @@
 
     <!-- start of conditionally hidden add transaction form div -->
     <div class="mb-4">
-      <AddNewTransaction :isShown="addFormShown" @close="hideTransactionForm()" />
+      <AddNewTransaction
+        :isShown="addFormShown"
+        @close="hideTransactionForm()"
+      />
     </div>
     <!-- end of conditionally hidden add transaction form div -->
 
@@ -197,18 +200,21 @@ export default {
     },
     sortedTransactions() {
       let sortedTransactions = this.filteredTransactions;
+
       if (this.sortByDate) {
         sortedTransactions.sort((a, b) => {
-          if (moment(a.date).isSameOrBefore(b.date))
-            return this.sortByDate * -1;
-          return this.sortByDate;
+          if (moment(a.date).isBefore(b.date)) return this.sortByDate * -1;
+          if (moment(a.date).isAfter(b.date)) return this.sortByDate;
+          return 0;
         });
       } else if (this.sortByAmount) {
         sortedTransactions.sort((a, b) => {
           if (a.amount < b.amount) return this.sortByAmount * -1;
-          return this.sortByAmount;
+          if (a.amount > b.amount) return this.sortByAmount;
+          return 0;
         });
       }
+
       return sortedTransactions;
     },
     shownTransactions() {

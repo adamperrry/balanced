@@ -2,9 +2,9 @@
   <div
     class=" bg-fuchsia-200 shadow-md max-w-4xl px-6 py-3 rounded-2xl flex flex-col items-center"
   >
-    <div>
-      <span class="text-fuchsia-900">Expenses At A Glance - </span>
-      <span class="font-semibold text-xl text-warmGray-700">{{
+    <div class="flex flex-wrap items-center justify-center">
+      <span class="text-fuchsia-900 mr-2">Expenses At A Glance:</span>
+      <span class="font-semibold text-xl text-warmGray-700 text-right">{{
         currentMonth
       }}</span>
     </div>

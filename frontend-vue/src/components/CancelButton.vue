@@ -14,7 +14,7 @@
     <span
       class="pl-3 select-none"
       :class="[{ 'text-warmGray-500': addButtonActive }]"
-      >{{this.msg}}</span
+      >{{ this.msg }}</span
     >
   </div>
 </template>
@@ -30,8 +30,8 @@ export default {
   props: {
     msg: {
       type: String,
-      default: "Cancel"
-    }
+      default: "Cancel",
+    },
   },
   data() {
     return {
