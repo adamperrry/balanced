@@ -49,7 +49,10 @@ The up side is high portability to a different back end service whose sole respo
 &nbsp;
 
 ## Installation/Setup
+### **Database Setup (MySQL)**
+Enter your specific MySQL information (url, username, password) in /balanced/src/main/resources/application.properties
 
+Using your chosen MySQL interface (CLI, MySQL Workbench, etc.) first run **balanced-tables.sql** in /balanced/backend. This will set up the database and all tables. Next, if desired, run **balanced-entries.sql** - this is my own personal dataset from the year 2020. I don't mind you using it, it's the best proof of concept I have! Note - I was living alone and ate A LOT of flaming hot cheetos. I have since given them up :(
 ### **Back End**
 
 This project is built with and requires a Maven installation. After installing Maven, navigate to the Balanced or Backend folder in the terminal and run the following command:
