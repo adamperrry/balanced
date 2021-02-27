@@ -35,10 +35,10 @@
       </div>
     </div>
 
-    <span
+    <a
       @click="viewSummaries()"
       class="text-warmGray-700 mt-2 hover:text-warmGray-500 text-sm underline cursor-pointer text-center"
-      >View all summaries...</span
+      >View all summaries...</a
     >
   </div>
 </template>
