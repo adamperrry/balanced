@@ -11,7 +11,7 @@
 
     <div class="flex flex-wrap justify-around">
       <div
-        class="shadow-sm bg-fuchsia-300 rounded-xl mt-2 mx-1 px-4 pb-2 pt-1 flex-grow flex flex-col max-w-1xs transform hover:scale-97"
+        class="transition-transform shadow-sm bg-fuchsia-300 rounded-xl mt-2 mx-1 px-4 pb-2 pt-1 flex-grow flex flex-col w-52 max-w-1xs transform hover:scale-97"
         v-for="category in categoryExpenses"
         :key="category.id"
       >
@@ -20,7 +20,7 @@
           >{{ category.name }}</span
         >
 
-        <div class="flex items-end justify-between">
+        <div class="flex items-end justify-between px-5">
           <span class="text-base text-warmGray-800">This Month:</span>
           <span
             class=" font-medium"
@@ -33,7 +33,7 @@
           >
         </div>
 
-        <div class="flex items-end justify-between text-sm text-warmGray-600">
+        <div class="flex items-end justify-between text-sm text-warmGray-600 px-5">
           <span>Last Month:</span>
           <span>{{ toCurrency(category.lastMonth) }}</span>
         </div>

@@ -4,10 +4,10 @@
     @mouseup="toggleAddButtonActive(false)"
     @mouseleave="toggleAddButtonActive(false)"
     @click="$emit('buttonClicked')"
-    class="flex items-center cursor-pointer hover:underline text-warmGray-700 text-lg font-medium"
+    class="flex max-w-max items-center cursor-pointer hover:underline text-warmGray-700 text-lg font-medium"
   >
     <PlusIcon
-      :classes="['w-10', 'h-10', 'text-green-600', 'fill-current']"
+      :classes="['w-10', 'h-10', 'text-green-600', 'fill-current','hover:text-green-700']"
       :class="[{ 'scale-90': addButtonActive }, 'transform']"
     />
     <span

@@ -97,6 +97,28 @@ const actions = {
       },
     );
   },
+  deleteTransaction({ commit }, id) {
+    axios.delete(baseUrl + "transactions/" + id).then(
+      response => {
+        console.log("Successfully deleted from DB: ", response.data);
+        commit("DELETE_TRANSACTION", id);
+      },
+      error => {
+        console.log("Couldn't delete from DB: ", error);
+      },
+    );
+  },
+  editTransaction({ commit }, transaction) {
+    axios.put(baseUrl + "transactions/" + transaction.id ,transaction).then(
+      response => {
+        console.log("Successfully updated in DB: ", response.data);
+        commit("UPDATE_TRANSACTION", transaction);
+      },
+      error => {
+        console.log("Couldn't update in DB: ", error);
+      },
+    );
+  },
 };
 
 //to handle mutations
@@ -106,6 +128,18 @@ const mutations = {
   },
   ADD_TRANSACTION(state, transaction) {
     state.transactions.push(transaction);
+  },
+  DELETE_TRANSACTION(state, id) {
+    let deleteIndex = state.transactions
+      .map(transaction => transaction.id)
+      .indexOf(id);
+    state.transactions.splice(deleteIndex, 1);
+  },
+  UPDATE_TRANSACTION(state, transaction) {
+    let updateIndex = state.transactions
+      .map(transaction => transaction.id)
+      .indexOf(transaction.id);
+    state.transactions[updateIndex] = transaction;
   },
 };
 

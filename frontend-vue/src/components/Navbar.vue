@@ -36,7 +36,7 @@
             v-for="page in pages"
             :key="page.id"
             :to="page.path"
-            class=" text-emerald-800 px-3 mr-2 uncollapsed:mr-0 uncollapsed:px-5 bg-emerald-200 pb-1 pt-2 uncollapsed:pt-3 font-medium uncollapsed:border-t-4 uncollapsed:border-r-0 border-r-7 border-emerald-200 hover:border-white"
+            class=" text-emerald-800 px-3 mr-2 uncollapsed:mr-0 uncollapsed:px-4 bg-emerald-200 pb-1 pt-2 uncollapsed:pt-3 font-medium uncollapsed:border-t-4 uncollapsed:border-r-0 border-r-7 border-emerald-200 hover:border-white"
           >
             {{ page.name }}
           </router-link>
