@@ -1,224 +1,232 @@
 <template>
-  <form
+  <div
     :class="{ hidden: !isShown }"
-    class="rounded-xl bg-coolGray-200 shadow-md pr-4 pt-3 pb-2 pl-2 flex flex-col"
+    class="fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-teal-900 bg-opacity-60 blurred"
   >
-    <!-- start of input fields -->
-    <div class="lg:flex items-start">
-      <!-- start of non-description input fields -->
-      <div class="flex flex-wrap lg:w-8/12">
-        <!-- Date -->
-        <div class="flex py-2 ">
-          <label for="date" class="pr-2 pl-3 ">Date:</label>
-          <input
-            id="date"
-            :class="[requiredField, { 'text-warmGray-500': !transaction.date }]"
-            class="max-w-2xs pl-1 rounded-md focus:outline-none focus:ring-1 focus:ring-warmGray-500"
-            type="date"
-            v-model="transaction.date"
-          />
-        </div>
+    <form
+      class="mx-3 relative rounded-xl bg-coolGray-200 shadow-md pr-4 pt-3 pb-2 pl-2 flex flex-col max-w-5xl"
+    >
+      <!-- start of input fields -->
 
-        <!-- amount -->
-        <div class="flex flex-wrap py-2">
-          <label for="amount" class="pr-2 pl-3">Amount:</label>
-          <div class="flex max-w-3xs ">
-            <span class="text-emerald-900">$</span>
+      <div class="lg:flex">
+        <!-- start of non-description input fields -->
+        <div class="flex flex-wrap lg:w-8/12">
+          <!-- Date -->
+          <div class="flex py-2 ">
+            <label for="date" class="pr-2 pl-3 ">Date:</label>
             <input
-              id="amount"
-              :class="requiredField"
-              class="w-full pl-2 rounded-md focus:outline-none focus:ring-1 focus:ring-warmGray-500"
-              type="number"
-              step="0.01"
-              placeholder="0.00"
-              v-model="transaction.amount"
+              id="date"
+              :class="[
+                requiredField,
+                { 'text-warmGray-500': !transaction.date },
+              ]"
+              class="max-w-2xs pl-1 rounded-md focus:outline-none focus:ring-1 focus:ring-warmGray-500"
+              type="date"
+              v-model="transaction.date"
             />
           </div>
-        </div>
 
-        <!-- category -->
-        <div class="flex flex-wrap py-2">
-          <label for="category" class="pr-2 pl-3">Category:</label>
-          <select
-            id="category"
-            class="pl-1 rounded-md bg-white w-56 border border-warmGray-400 focus:outline-none focus:ring-1 focus:ring-warmGray-500"
-            :class="{ 'text-warmGray-500': !transaction.category }"
-            v-model="transaction.category"
-            @change="transaction.subcategory = null"
-          >
-            <option class="text-warmGray-500" :value="null">(none)</option>
-            <option
-              v-for="category in sortByName(categories)"
-              :value="category"
-              :key="category.id"
-              class="text-warmGray-800"
-            >
-              {{ category.name }}
-            </option>
-          </select>
-        </div>
+          <!-- amount -->
+          <div class="flex flex-wrap py-2">
+            <label for="amount" class="pr-2 pl-3">Amount:</label>
+            <div class="flex max-w-3xs ">
+              <span class="text-emerald-900">$</span>
+              <input
+                id="amount"
+                :class="requiredField"
+                class="w-full pl-2 rounded-md focus:outline-none focus:ring-1 focus:ring-warmGray-500"
+                type="number"
+                step="0.01"
+                placeholder="0.00"
+                v-model="transaction.amount"
+              />
+            </div>
+          </div>
 
-        <!-- subcategory -->
-        <div class="flex flex-wrap py-2">
-          <label for="subcategory" class="pr-2 pl-3">Subcategory:</label>
-          <select
-            id="subcategory"
-            class="pl-1 rounded-md bg-white w-52 border border-warmGray-400 focus:outline-none focus:ring-1 focus:ring-warmGray-500"
-            :class="{ 'text-warmGray-500': !transaction.subcategory }"
-            v-model="transaction.subcategory"
-          >
-            <option selected class="text-warmGray-500" :value="null"
-              >(none)</option
+          <!-- category -->
+          <div class="flex flex-wrap py-2">
+            <label for="category" class="pr-2 pl-3">Category:</label>
+            <select
+              id="category"
+              class="pl-1 rounded-md bg-white w-56 border border-warmGray-400 focus:outline-none focus:ring-1 focus:ring-warmGray-500"
+              :class="{ 'text-warmGray-500': !transaction.category }"
+              v-model="transaction.category"
+              @change="transaction.subcategory = null"
             >
-            <template v-if="transaction.category">
+              <option class="text-warmGray-500" :value="null">(none)</option>
               <option
-                v-for="subcategory in sortByName(
-                  transaction.category.subcategories,
-                )"
-                :value="subcategory"
-                :key="subcategory.id"
+                v-for="category in sortByName(categories)"
+                :value="category"
+                :key="category.id"
                 class="text-warmGray-800"
               >
-                {{ subcategory.name }}
+                {{ category.name }}
               </option>
-            </template>
-          </select>
-        </div>
+            </select>
+          </div>
 
-        <!-- Method -->
-        <div class="flex flex-wrap py-2">
-          <label for="method" class="pr-2 pl-3">Method:</label>
-          <select
-            id="method"
-            :class="[
-              requiredField,
-              { 'text-warmGray-500': !transaction.method },
-            ]"
-            class="pl-1 rounded-md bg-white w-52 focus:outline-none focus:ring-1 focus:ring-warmGray-500"
-            v-model="transaction.method"
-          >
-            <option disabled class="text-warmGray-500" :value="null"
-              >Select a method...</option
+          <!-- subcategory -->
+          <div class="flex flex-wrap py-2">
+            <label for="subcategory" class="pr-2 pl-3">Subcategory:</label>
+            <select
+              id="subcategory"
+              class="pl-1 rounded-md bg-white w-52 border border-warmGray-400 focus:outline-none focus:ring-1 focus:ring-warmGray-500"
+              :class="{ 'text-warmGray-500': !transaction.subcategory }"
+              v-model="transaction.subcategory"
             >
-            <option
-              v-for="method in sortByName(methods)"
-              :value="method"
-              :key="method.id"
-              class="text-warmGray-800"
-            >
-              {{ method.name }}
-            </option>
-          </select>
-        </div>
+              <option selected class="text-warmGray-500" :value="null"
+                >(none)</option
+              >
+              <template v-if="transaction.category">
+                <option
+                  v-for="subcategory in sortByName(
+                    transaction.category.subcategories,
+                  )"
+                  :value="subcategory"
+                  :key="subcategory.id"
+                  class="text-warmGray-800"
+                >
+                  {{ subcategory.name }}
+                </option>
+              </template>
+            </select>
+          </div>
 
-        <!-- To Account -->
-        <div class="flex flex-wrap py-2">
-          <label for="toAccount" class="pr-2 pl-3">To:</label>
-          <select
-            id="toAccount"
-            class="pl-1 rounded-md bg-white w-56 focus:outline-none focus:ring-1 focus:ring-warmGray-500"
-            :class="[
-              requiredField,
-              { 'text-warmGray-500': !transaction.toAccount },
-            ]"
-            v-model="transaction.toAccount"
-          >
-            <option class="text-warmGray-500" :value="null">(none)</option>
-            <option
-              v-for="account in sortByName(accounts)"
-              :value="account"
-              :key="account.id"
-              class="text-warmGray-800"
+          <!-- Method -->
+          <div class="flex flex-wrap py-2">
+            <label for="method" class="pr-2 pl-3">Method:</label>
+            <select
+              id="method"
+              :class="[
+                requiredField,
+                { 'text-warmGray-500': !transaction.method },
+              ]"
+              class="pl-1 rounded-md bg-white w-52 focus:outline-none focus:ring-1 focus:ring-warmGray-500"
+              v-model="transaction.method"
             >
-              {{ account.name }}
-            </option>
-          </select>
-        </div>
+              <option disabled class="text-warmGray-500" :value="null"
+                >Select a method...</option
+              >
+              <option
+                v-for="method in sortByName(methods)"
+                :value="method"
+                :key="method.id"
+                class="text-warmGray-800"
+              >
+                {{ method.name }}
+              </option>
+            </select>
+          </div>
 
-        <!-- From Account -->
-        <div class="flex flex-wrap py-2">
-          <label for="fromAccount" class="pr-2 pl-3">From:</label>
-          <select
-            id="toAccount"
-            class="pl-1 rounded-md bg-white w-56 focus:outline-none focus:ring-1 focus:ring-warmGray-500"
-            :class="[
-              requiredField,
-              { 'text-warmGray-500': !transaction.fromAccount },
-            ]"
-            v-model="transaction.fromAccount"
-          >
-            <option class="text-warmGray-500" :value="null">(none)</option>
-            <option
-              v-for="account in sortByName(accounts)"
-              :value="account"
-              :key="account.id"
-              class="text-warmGray-800"
+          <!-- To Account -->
+          <div class="flex flex-wrap py-2">
+            <label for="toAccount" class="pr-2 pl-3">To:</label>
+            <select
+              id="toAccount"
+              class="pl-1 rounded-md bg-white w-56 focus:outline-none focus:ring-1 focus:ring-warmGray-500"
+              :class="[
+                requiredField,
+                { 'text-warmGray-500': !transaction.toAccount },
+              ]"
+              v-model="transaction.toAccount"
             >
-              {{ account.name }}
-            </option>
-          </select>
-        </div>
+              <option class="text-warmGray-500" :value="null">(none)</option>
+              <option
+                v-for="account in sortByName(accounts)"
+                :value="account"
+                :key="account.id"
+                class="text-warmGray-800"
+              >
+                {{ account.name }}
+              </option>
+            </select>
+          </div>
 
-        <!-- tip -->
-        <div class="flex flex-wrap py-2">
-          <label for="tip" class="pr-2 pl-3">Tip:</label>
-          <div class="flex max-w-3xs ">
-            <span class="text-emerald-900">$</span>
+          <!-- From Account -->
+          <div class="flex flex-wrap py-2">
+            <label for="fromAccount" class="pr-2 pl-3">From:</label>
+            <select
+              id="toAccount"
+              class="pl-1 rounded-md bg-white w-56 focus:outline-none focus:ring-1 focus:ring-warmGray-500"
+              :class="[
+                requiredField,
+                { 'text-warmGray-500': !transaction.fromAccount },
+              ]"
+              v-model="transaction.fromAccount"
+            >
+              <option class="text-warmGray-500" :value="null">(none)</option>
+              <option
+                v-for="account in sortByName(accounts)"
+                :value="account"
+                :key="account.id"
+                class="text-warmGray-800"
+              >
+                {{ account.name }}
+              </option>
+            </select>
+          </div>
+
+          <!-- tip -->
+          <div class="flex flex-wrap py-2">
+            <label for="tip" class="pr-2 pl-3">Tip:</label>
+            <div class="flex max-w-3xs ">
+              <span class="text-emerald-900">$</span>
+              <input
+                id="tip"
+                class="w-full pl-2 rounded-md border border-warmGray-400 focus:outline-none focus:ring-1 focus:ring-warmGray-500"
+                type="number"
+                step="0.01"
+                placeholder="0.00"
+                v-model="transaction.tip"
+              />
+            </div>
+          </div>
+
+          <!-- recurring -->
+          <div class="flex items-center py-2">
             <input
-              id="tip"
-              class="w-full pl-2 rounded-md border border-warmGray-400 focus:outline-none focus:ring-1 focus:ring-warmGray-500"
-              type="number"
-              step="0.01"
-              placeholder="0.00"
-              v-model="transaction.tip"
+              id="recurring"
+              class="ml-3 cursor-pointer focus:outline-none focus:ring-1 focus:ring-warmGray-500"
+              type="checkbox"
+              v-model="transaction.isRecurring"
             />
+            <label for="recurring" class="pr-2 pl-1 cursor-pointer"
+              >Recurring?</label
+            >
           </div>
         </div>
+        <!-- end of non-description input fields -->
 
-        <!-- recurring -->
-        <div class="flex items-center py-2">
-          <input
+        <!-- description -->
+        <div class="flex flex-col py-2 lg:w-4/12 pl-3 ">
+          <label for="description" class="pr-2">Description:</label>
+          <textarea
             id="recurring"
-            class="ml-3 cursor-pointer focus:outline-none focus:ring-1 focus:ring-warmGray-500"
-            type="checkbox"
-            v-model="transaction.isRecurring"
-          />
-          <label for="recurring" class="pr-2 pl-1 cursor-pointer"
-            >Recurring?</label
-          >
+            class="px-2 py-1 cursor-pointer w-full h-28 rounded-xl border border-warmGray-400 focus:outline-none focus:ring-1 focus:ring-warmGray-500"
+            placeholder="Describe the transaction..."
+            v-model="transaction.description"
+          ></textarea>
         </div>
+        <!-- end of description -->
       </div>
-      <!-- end of non-description input fields -->
 
-      <!-- description -->
-      <div class="flex flex-col py-2 lg:w-4/12 pl-3 ">
-        <label for="description" class="pr-2">Description:</label>
-        <textarea
-          id="recurring"
-          class="px-2 py-1 cursor-pointer w-full h-20 rounded-xl border border-warmGray-400 focus:outline-none focus:ring-1 focus:ring-warmGray-500"
-          placeholder="Describe the transaction..."
-          v-model="transaction.description"
-        ></textarea>
+      <!-- buttons -->
+      <div class="flex justify-center lg:justify-end">
+        <CancelButton
+          @buttonClicked="cancel()"
+          title="Cancel"
+          class="transform "
+          :msg="''"
+        />
+        <AddButton
+          @buttonClicked="update()"
+          title="Update Transaction"
+          class="transform "
+          :msg="''"
+        />
       </div>
-      <!-- end of description -->
-    </div>
-
-    <!-- buttons -->
-    <div class="flex justify-center lg:justify-end">
-      <CancelButton
-        @buttonClicked="cancel()"
-        title="Cancel"
-        class="transform "
-        :msg="''"
-      />
-      <AddButton
-        @buttonClicked="save()"
-        title="Update Transaction"
-        class="transform "
-        :msg="''"
-      />
-    </div>
-  </form>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -233,18 +241,30 @@ export default {
     AddButton,
     CancelButton,
   },
-  props: {
-    isShown: {
-      type: Boolean,
-      required: true,
-    },
-  },
+  props: ["isShown", "editing"],
   emits: ["close"],
   data() {
     return {
       transaction: this.getEmptyTransaction(),
       submitted: false,
     };
+  },
+  watch: {
+    editing(edit) {
+      console.log(edit);
+      if (!this.editing) return;
+      this.transaction.id = edit.id;
+      this.transaction.date = moment(edit.date).format("YYYY-MM-DD");
+      this.transaction.amount = edit.amount / 100;
+      this.transaction.category = edit.category;
+      this.transaction.subcategory = edit.subcategory;
+      this.transaction.toAccount = edit.toAccount;
+      this.transaction.fromAccount = edit.fromAccount;
+      this.transaction.method = edit.method;
+      this.transaction.tip = edit.tip / 100;
+      this.transaction.isRecurring = edit.isRecurring;
+      this.transaction.description = edit.description;
+    },
   },
   computed: {
     ...mapState(["categories", "types", "accounts", "methods"]),
@@ -274,6 +294,7 @@ export default {
       }
 
       return {
+        id: this.transaction.id,
         type,
         date: this.transaction.date
           ? moment(this.transaction.date).format("YYYY-MM-DD")
@@ -288,7 +309,7 @@ export default {
         toAccount,
         description: this.transaction.description,
         tip: this.transaction.tip
-          ? Math.abs(parseInt(this.transaction.tip))
+          ? Math.abs(parseInt(this.transaction.tip * 100))
           : 0.0,
         isRecurring: this.transaction.isRecurring,
       };
@@ -298,6 +319,7 @@ export default {
     ...mapActions(["editTransaction"]),
     getEmptyTransaction() {
       return {
+        id: null,
         date: null,
         amount: null,
         category: null,
@@ -347,3 +369,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.blurred {
+  backdrop-filter: saturate(180%) blur(3px);
+}
+</style>

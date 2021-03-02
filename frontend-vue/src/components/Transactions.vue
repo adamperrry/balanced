@@ -18,6 +18,16 @@
     </div>
     <!-- end of conditionally hidden add transaction form div -->
 
+    <!-- start of conditionally hidden edit transaction form div -->
+    <div class="mb-4">
+      <EditTransaction
+        :isShown="editModalShown"
+        :editing="editing"
+        @close="hideEditModal()"
+      />
+    </div>
+    <!-- end of conditionally hidden edit transaction form div -->
+
     <!-- start of header row -->
     <div
       class="flex pt-2 pb-1 px-3 rounded-t-xl bg-emerald-200 font-semibold tracking-wide border-b-4 border-emerald-600 shadow-sm text-warmGray-700"
@@ -89,7 +99,7 @@
 
     <!-- start of table rows -->
     <div v-for="transaction in shownTransactions" :key="transaction.id">
-      <TransactionRow :transaction="transaction" />
+      <TransactionRow :transaction="transaction" @edit="updateEdit" />
     </div>
     <!-- end of table rows -->
 
@@ -162,6 +172,7 @@ import SortIcon from "@/assets/SortIcon.vue";
 import AddButton from "@/components/AddButton.vue";
 import TransactionRow from "@/components/TransactionRow.vue";
 import AddNewTransaction from "@/components/AddNewTransaction.vue";
+import EditTransaction from "@/components/EditTransaction.vue";
 
 export default {
   name: "Transactions",
@@ -171,6 +182,7 @@ export default {
     AddButton,
     TransactionRow,
     AddNewTransaction,
+    EditTransaction,
   },
   props: {
     showAll: {
@@ -189,6 +201,8 @@ export default {
       sortByDate: -1,
       sortByAmount: 0,
       addFormShown: false,
+      editModalShown: false,
+      editing: null,
     };
   },
   computed: {
@@ -228,7 +242,26 @@ export default {
       );
     },
   },
+  getEmptyTransaction() {
+    return {
+      id: null,
+      date: null,
+      amount: null,
+      category: null,
+      subcategory: null,
+      toAccount: null,
+      fromAccount: null,
+      method: null,
+      tip: null,
+      isRecurring: false,
+      description: "",
+    };
+  },
   methods: {
+    updateEdit(transaction) {
+      this.editing = transaction;
+      this.editModalShown = true;
+    },
     resetFilters() {
       // set sortByDate and sortByAmount, and clear filters
     },
@@ -261,6 +294,17 @@ export default {
     hideTransactionForm() {
       this.addFormShown = false;
     },
+    hideEditModal() {
+      this.editing = null;
+      this.editModalShown = false;
+    },
+  },
+  watch: {
+    editModalShown(val) {
+      val
+        ? document.body.classList.add("overflow-hidden")
+        : document.body.classList.remove("overflow-hidden");
+    },
   },
   updated() {
     this.$nextTick(() => {
@@ -271,3 +315,8 @@ export default {
   },
 };
 </script>
+
+
+
+
+

@@ -288,7 +288,7 @@ export default {
         toAccount,
         description: this.transaction.description,
         tip: this.transaction.tip
-          ? Math.abs(parseInt(this.transaction.tip))
+          ? Math.abs(parseInt(this.transaction.tip * 100))
           : 0.0,
         isRecurring: this.transaction.isRecurring,
       };

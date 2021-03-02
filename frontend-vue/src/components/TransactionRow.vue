@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative overflow-hidden transition-shadow flex border-b cursor-pointer hover:z-50 border-gray-500 hover:shadow-md text-warmGray-800"
+    class="relative overflow-hidden transition-shadow flex border-b cursor-pointer hover:z-40 border-gray-500 hover:shadow-md text-warmGray-800"
     :class="[
       {
         'bg-red-100': isExpense(transaction),
@@ -66,9 +66,9 @@
       <div
         class="flex-auto flex items-center justify-center hover:bg-white bg-coolGray-100 border-r border-gray-500"
         title="Edit"
+        @click="this.$emit('edit', transaction)"
       >
         <EditIcon
-          class=""
           :classes="['w-5', 'h-5', 'text-warmGray-600', 'fill-current']"
         />
       </div>
@@ -89,6 +89,7 @@ export default {
     EditIcon,
     TrashIcon,
   },
+  emits: ["edit"],
   props: {
     transaction: {
       type: Object,
